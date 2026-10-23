@@ -2,25 +2,24 @@
 **CS-13410 Introduction to Machine Learning: Semester Project (Fall 2026)**
 
 **Dataset:** Hotel Booking Demand (Antonio, de Almeida & Nunes, 2019)
-**Task:** Binary classification, predict whether a hotel booking is cancelled
+**Task:** Binary classification — predict whether a hotel booking is cancelled
 **Group:** Muhammad Abdullah Noor (70146205), Mehrab Fiaz (70148905), Muhammad Ahmed (70149644)
 
 ## Files
-- `Notebook.ipynb`: main notebook (each part adds a new section)
-- `hotel_bookings.csv`: dataset
-- `Project_Proposal.docx`: one-page proposal
-- `requirements.txt`: Python libraries needed
-- `part1_pipeline.py`: reusable leakage-free preprocessing pipeline
-- `abdullah_decision_tree.py`: standalone Decision Tree exploration script
-- `tree_best_params.json`: best Decision Tree hyperparameters
-- `README_Ahmed.md`: Ahmed's interpretation guide (Part 2)
-- `README_Abdullah.md`: Abdullah's interpretation guide (Part 2)
-- `README_Mehrab.md`: Mehrab's interpretation guide (Part 2)
-- `README_Model_Comparison.md`: Half-page model comparison for report
+- `Notebook.ipynb` — main notebook (Part 1 + Part 2)
+- `hotel_bookings.csv` — dataset
+- `Project_Proposal.docx` — one-page proposal
+- `requirements.txt` — Python dependencies
+- `part1_pipeline.py` — reusable leakage-free preprocessing pipeline
+- `abdullah_decision_tree.py` — standalone Decision Tree exploration script
+- `tree_best_params.json` — best Decision Tree hyperparameters (`{"max_depth": 12}`)
+- `ML Project.docx` — official project brief
 
-## How to run
-1. `pip install -r requirements.txt`
-2. Open `Notebook.ipynb` and click Run All (keep the CSV in the same folder).
+## How to Run
+```bash
+pip install -r requirements.txt
+```
+Open `Notebook.ipynb` and click **Run All** (keep `hotel_bookings.csv` in the same folder).
 
 ## Progress
 - [x] Part 1: Data preparation & leakage-free pipeline
@@ -41,7 +40,7 @@
 
 **Target leakage removed:**
 - `reservation_status` (perfect proxy: Canceled/No-Show = 1, Check-Out = 0)
-- `reservation_status_date` (date of cancellation/check-out)
+- `reservation_status_date` (cancellation/check-out date)
 - `assigned_room_type` (assigned at check-in)
 - `company` (94.3% missing)
 - `arrival_date_year`, `arrival_date_week_number`, `arrival_date_day_of_month` (temporal leakage)
@@ -60,7 +59,7 @@
 - Binary: passthrough
 - Categorical: "Missing" impute → OneHotEncoder (min_frequency=0.01, drop="if_binary")
 - Feature selection: SelectKBest (ANOVA F-test, k=30)
-- Verified: test set scaled using training statistics only (test mean ≈ 0, std ≈ 1 but not exactly)
+- Verified: test set scaled using training statistics only
 
 **Class imbalance handling:**
 - Compared: No handling vs Class weights vs SMOTE (5-fold stratified CV, Logistic Regression baseline)
@@ -141,14 +140,12 @@
 ### Model Comparison (Mehrab's section)
 
 **Cross-Validation (5-fold stratified, train set only):**
-
 | Model | CV F1 | CV Recall | CV Precision | CV ROC-AUC |
 |-------|-------|-----------|--------------|------------|
 | Naive Bayes | 0.577 | 0.791 | 0.454 | 0.793 |
 | **Decision Tree** | **0.666** | **0.849** | **0.548** | **0.869** |
 
 **Test Set (held-out, evaluated once):**
-
 | Model | Test F1 | Test Recall | Test Precision | Test ROC-AUC |
 |-------|---------|-------------|----------------|--------------|
 | Naive Bayes | 0.58 | 0.80 | 0.46 | 0.799 |
@@ -173,9 +170,9 @@
 
 4. **No overfitting to CV:** Test F1 ≈ CV F1 for both models (NB: 0.577→0.58, DT: 0.666→0.67)
 
-4. **Precision remains modest (0.46-0.54)** — many false alarms (unnecessary deposit requests), but acceptable cost for high recall
+5. **Precision remains modest (0.46-0.54)** — many false alarms (unnecessary deposit requests), but acceptable cost for high recall
 
-5. **Fairness flag:** `country_PRT` (Portuguese guests) is a top-5 feature → Part 4 must examine discrimination risk
+6. **Fairness flag:** `country_PRT` (Portuguese guests) is a top-5 feature → Part 4 must examine discrimination risk
 
 ---
 
