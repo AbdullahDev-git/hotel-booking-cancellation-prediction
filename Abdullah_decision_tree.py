@@ -2,7 +2,7 @@
 
 # %%
 from part1_pipeline import *
-import json
+import jsongi
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text
