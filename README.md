@@ -17,7 +17,7 @@
 
 ## Progress
 - [x] Part 1: Data preparation & leakage-free pipeline
-- [ ] Part 2: Naive Bayes vs Decision Tree
+- [x] Part 2: Naive Bayes vs Decision Tree
 - [ ] Part 3: Ensembles & tuning
 - [ ] Part 4: Neural network, clustering, fairness
 - [ ] Part 5: Final report & viva
